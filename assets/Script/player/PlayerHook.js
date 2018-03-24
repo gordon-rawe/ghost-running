@@ -17,7 +17,7 @@ cc.Class({
     },
 
     update (dt) {
-        this.playerShadow.scale = (this.maxHeight - (this.realPlayer.y - this.baseHeight)* 0.3) / this.maxHeight;
-        console.log(this.playerShadow.scale);
+        const calcScale = (this.maxHeight - (this.realPlayer.y - this.baseHeight)* 0.2) / this.maxHeight;
+        this.playerShadow.scale = calcScale > 1 ? 1 : calcScale < 0.5 ? 0.5 : calcScale;
     },
 });

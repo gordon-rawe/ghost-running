@@ -3,7 +3,13 @@ cc.Class({
 
     properties: {
         aliveFrame: cc.SpriteFrame,
-        deadFrame: cc.SpriteFrame
+        deadFrame: cc.SpriteFrame,
+        jumpClip: {
+            url: cc.AudioClip,
+            default: null
+        },
+        MAX_JUMP_TIME: 0,
+        STEP_HEIGHT: 0,
     },
 
     danceLikePhantom() {
@@ -16,8 +22,51 @@ cc.Class({
         this.node.getComponent(cc.Sprite).spriteFrame = this.aliveFrame;
     },
 
+    initControl() {
+        const listener = {
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            onTouchBegan: (touches, event) => {
+                this.performJump();
+                return true;
+            },
+        }
+        cc.eventManager.addListener(listener, this.node);
+    },
+
+    performJump() {
+        if(this.jumpTime >= this.MAX_JUMP_TIME) {
+            return;
+        }
+        cc.audioEngine.play(this.jumpClip, false, 1);
+        this.node.stopAllActions();
+        const jumpDownFinishAction = cc.callFunc(function () {
+            this.danceLikePhantom();
+            this.jumpTime = 0;
+        }, this);
+        const jumpUpAction = cc.moveBy(0.3, cc.p(0, this.getStepHeight())).easing(cc.easeCubicActionOut());
+        const jumpDownAction = cc.moveTo(0.3, cc.p(this.initX, this.initY)).easing(cc.easeCubicActionIn());
+        this.node.runAction(cc.sequence(jumpUpAction, jumpDownAction, jumpDownFinishAction));
+        this.jumpTime ++;
+    },
+
+    recordInitState() {
+        this.initY = this.node.y;
+        this.initX = this.node.x;
+        this.jumpTime = 0;
+    },
+
+    getStepHeight() {
+        let retHeight = this.STEP_HEIGHT;
+        for(let i = 0; i < this.jumpTime; i++) {
+            retHeight *= 0.7;
+        }
+        return retHeight;
+    },
+
     onLoad () {
+        this.recordInitState();
         this.danceLikePhantom();
+        this.initControl();
     },
 
     start () {

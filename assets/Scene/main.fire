@@ -1570,7 +1570,12 @@
     },
     "deadFrame": {
       "__uuid__": "d6004549-f28a-4e70-9860-206dabf1f7b8"
-    }
+    },
+    "jumpClip": {
+      "__uuid__": "5a68a295-e4d2-4585-bf61-8d848ba0e09c"
+    },
+    "MAX_JUMP_TIME": 3,
+    "STEP_HEIGHT": 90
   },
   {
     "__type__": "cc.Sprite",
