@@ -85,9 +85,7 @@ cc.Class({
         this.initControl();
     },
 
-    start () {
-
+    onCollisionEnter(other, self) {
+        this.node.dispatchEvent(new cc.Event.EventCustom('collision', true));
     },
-
-    // update (dt) {},
 });

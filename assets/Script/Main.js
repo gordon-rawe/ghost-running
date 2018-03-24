@@ -8,16 +8,23 @@ cc.Class({
             url: cc.AudioClip,
             default: null
         },
+        playerNode: cc.Node,
+        dieClip: {
+            url: cc.AudioClip,
+            default: null
+        },
         beePrefab: cc.Prefab,
         bigRock: cc.Prefab,
         middleRock: cc.Prefab,
         smallRock: cc.Prefab,
+        startBtn: cc.Node,
+        restartBtn: cc.Node,
     },
 
     onLoad: function () {
         this.playBackgroundMusic();
         this.initParams();
-        this.startGame();
+        this.enableCollistionDetection();
     },
 
     update: function (dt) {
@@ -46,11 +53,17 @@ cc.Class({
 
     resetSpeedRaser() {
         if(this.speedTimer){
-            this.clearInterval(this.speedRaiser);
+            clearInterval(this.speedRaiser);
         }
+        cc.speedRatio = 1;
     },
 
     startGame() {
+        cc.gamePlaying = true;
+        this.playerNode.active = true;
+        this.playerNode.active = true;
+        this.startBtn.active = false;
+        this.restartBtn.active = false;
         this.initSpeedRaiser();
         this.spawnEnemies();
     },
@@ -104,5 +117,35 @@ cc.Class({
     generateSmallRock() {
         const rock = cc.instantiate(this.smallRock);
         this.node.addChild(rock);
+    },
+
+    enableCollistionDetection() {
+        cc.director.getCollisionManager().enabled = true;
+        this.node.on('collision', (event) => {
+            this.gameOver();
+        });
+    },
+
+    gameOver() {
+        cc.audioEngine.play(this.dieClip, false, 1);
+        this.stopSpawnEnemies();
+        this.resetSpeedRaser();
+        this.restartBtn.active = true;
+        this.playerNode.active = false;
+        cc.gamePlaying = false;
+    },
+
+    handleClickStart() {
+        if(cc.gamePlaying) {
+            return;
+        }
+        this.startGame();
+    },
+
+    handleClickRestart() {
+        if(cc.gamePlaying) {
+            return;
+        }
+        this.startGame();
     },
 });

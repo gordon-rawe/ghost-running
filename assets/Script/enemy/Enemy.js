@@ -21,7 +21,7 @@ cc.Class({
     },
 
     checkAndDestroy() {
-        if(this.node.x < -(this.winInfo.width / 2 + this.node.width)) {
+        if(this.node.x < -(this.winInfo.width / 2 + this.node.width) || !cc.gamePlaying) {
             this.node.destroy();
             console.log("bee node destroyed...");
         }
