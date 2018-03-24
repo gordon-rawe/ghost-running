@@ -1,4 +1,5 @@
 const Slides = require('slides/Slides');
+const Utils = require('./utils/Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -20,6 +21,8 @@ cc.Class({
         smallRock: cc.Prefab,
         startBtn: cc.Node,
         restartBtn: cc.Node,
+        shareBtn: cc.Node,
+        rankingBoard: cc.Node,
     },
 
     onLoad: function () {
@@ -67,6 +70,7 @@ cc.Class({
         this.realPlayer.getComponent('PlayerReal').reborn();
         this.initSpeedRaiser();
         this.spawnEnemies();
+        this.dismissRankingBoard();
     },
 
     spawnEnemies() {
@@ -131,6 +135,7 @@ cc.Class({
         cc.audioEngine.play(this.dieClip, false, 1);
         this.stopSpawnEnemies();
         this.resetSpeedRaser();
+        this.showRankingBoard();
         cc.gamePlaying = false;
         setTimeout(() => {
             this.restartBtn.active = true;
@@ -138,11 +143,17 @@ cc.Class({
     },
 
     showRankingBoard() {
-
+        this.shareBtn.active = true;
+        if(this.rankingBoard.active) {
+    		return;
+    	}
+        this.rankingBoard.active = true;
+        this.rankingBoard.getComponent('RankingScrollView').requestUsers();
     },
 
     dismissRankingBoard() {
-
+        this.shareBtn.active = false;
+        this.rankingBoard.active = false;
     },
 
     showShare() {
@@ -165,5 +176,9 @@ cc.Class({
             return;
         }
         this.startGame();
+    },
+
+    handleClickShare() {
+
     },
 });

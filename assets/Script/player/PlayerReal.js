@@ -26,7 +26,9 @@ cc.Class({
         const listener = {
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan: (touches, event) => {
-                this.performJump();
+                if(cc.gamePlaying) {
+                    this.performJump();
+                }
                 return true;
             },
         }
