@@ -9,6 +9,9 @@ cc.Class({
             default: null
         },
         beePrefab: cc.Prefab,
+        bigRock: cc.Prefab,
+        middleRock: cc.Prefab,
+        smallRock: cc.Prefab,
     },
 
     onLoad: function () {
@@ -54,8 +57,27 @@ cc.Class({
 
     spawnEnemies() {
         this.spawnTimer = setInterval(() => {
-            this.generateBeeEnemy();
-        }, 3000);
+            this.randomGenerate();
+        }, 2000);
+    },
+
+    randomGenerate() {
+        const seed = Math.floor(cc.random0To1() * 100) % 4;
+        switch(seed) {
+            case 0:
+            case 4:
+                this.generateBee();
+                break;
+            case 1:
+                this.generateBigRock();
+                break;
+            case 2:
+                this.generateMiddleRock();
+                break;
+            default:
+                this.generateSmallRock();
+                break;
+        }
     },
 
     stopSpawnEnemies() {
@@ -64,8 +86,23 @@ cc.Class({
         }
     },
 
-    generateBeeEnemy() {
+    generateBee() {
         const beeEnemy = cc.instantiate(this.beePrefab);
         this.node.addChild(beeEnemy);
+    },
+
+    generateBigRock() {
+        const rock = cc.instantiate(this.bigRock);
+        this.node.addChild(rock);
+    },
+
+    generateMiddleRock() {
+        const rock = cc.instantiate(this.middleRock);
+        this.node.addChild(rock);
+    },
+    
+    generateSmallRock() {
+        const rock = cc.instantiate(this.smallRock);
+        this.node.addChild(rock);
     },
 });

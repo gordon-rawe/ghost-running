@@ -6,7 +6,7 @@ cc.Class({
         
     },
 
-    getSpeed() {
-        return 200;
+    generateRandomHeight() {
+        return this.FLOOR;
     },
 });

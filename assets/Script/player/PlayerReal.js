@@ -43,7 +43,7 @@ cc.Class({
             this.danceLikePhantom();
             this.jumpTime = 0;
         }, this);
-        const jumpUpAction = cc.moveBy(0.3, cc.p(0, this.getStepHeight())).easing(cc.easeCubicActionOut());
+        const jumpUpAction = cc.moveBy(this.getDurationDec(), cc.p(0, this.getStepHeight())).easing(cc.easeCubicActionOut());
         const jumpDownAction = cc.moveTo(this.getStepDuration(), cc.p(this.initX, this.initY)).easing(cc.easeCubicActionIn());
         this.node.runAction(cc.sequence(jumpUpAction, jumpDownAction, jumpDownFinishAction));
         this.jumpTime ++;
@@ -61,6 +61,14 @@ cc.Class({
             retHeight *= 0.7;
         }
         return retHeight;
+    },
+
+    getDurationDec() {
+        let retTime = 0.45;
+        for(let i = 0; i < this.jumpTime; i++) {
+            retTime *= 0.7;
+        }
+        return retTime;
     },
 
     getStepDuration() {

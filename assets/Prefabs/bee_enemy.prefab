@@ -44,7 +44,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 35,
+      "width": 38,
       "height": 35
     },
     "_rotationX": 0,
@@ -98,7 +98,7 @@
     },
     "_enabled": true,
     "CEIL": 60,
-    "FLOOR": -78
+    "FLOOR": -110
   },
   {
     "__type__": "cc.PrefabInfo",
