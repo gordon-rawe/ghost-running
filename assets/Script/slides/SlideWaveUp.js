@@ -10,13 +10,13 @@ cc.Class({
 
     // onLoad () {},
 
+    getSpeed() {
+        return 120;
+    },
+
     start () {
 
     },
-
-    getSpeed() {
-        return 110;
-    }
 
     // update (dt) {},
 });

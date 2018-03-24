@@ -15,7 +15,7 @@ cc.Class({
     },
 
     getSpeed() {
-        return 110;
+        return 90;
     }
 
     // update (dt) {},

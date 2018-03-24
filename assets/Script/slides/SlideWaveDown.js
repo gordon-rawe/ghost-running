@@ -6,6 +6,10 @@ cc.Class({
         
     },
 
+    getSpeed() {
+        return 90;
+    },
+
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
@@ -13,10 +17,6 @@ cc.Class({
     start () {
 
     },
-
-    getSpeed() {
-        return 110;
-    }
 
     // update (dt) {},
 });

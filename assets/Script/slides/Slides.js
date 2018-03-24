@@ -13,10 +13,9 @@ cc.Class({
 
     },
 
-    // update (dt) {},
+    update (dt) {},
 
     moveCamera(moveX) {
-        console.log('moveX' + moveX);
         this.checkPerformRepeat();
         this.slides.forEach(slide => {
             slide.x -= moveX * this.getSpeed();
