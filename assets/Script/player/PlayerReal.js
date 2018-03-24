@@ -85,7 +85,16 @@ cc.Class({
         this.initControl();
     },
 
+    beKilled() {
+        this.node.getComponent(cc.Sprite).spriteFrame = this.deadFrame;
+    },
+
+    reborn() {
+        this.node.getComponent(cc.Sprite).spriteFrame = this.aliveFrame;
+    },
+
     onCollisionEnter(other, self) {
+        this.beKilled();
         this.node.dispatchEvent(new cc.Event.EventCustom('collision', true));
     },
 });

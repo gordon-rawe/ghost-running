@@ -115,7 +115,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 480,
-      "height": 720
+      "height": 800
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -124,7 +124,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 240,
-      "y": 360
+      "y": 400
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -167,7 +167,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 480,
-      "height": 720
+      "height": 1000
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -335,7 +335,7 @@
     "_rotationX": 0,
     "_rotationY": 0,
     "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleY": 1.3,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -567,7 +567,7 @@
     "_rotationX": 0,
     "_rotationY": 0,
     "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleY": 1.3,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -1880,10 +1880,10 @@
     "_designResolution": {
       "__type__": "cc.Size",
       "width": 480,
-      "height": 720
+      "height": 800
     },
-    "_fitWidth": false,
-    "_fitHeight": true
+    "_fitWidth": true,
+    "_fitHeight": false
   },
   {
     "__type__": "280c3rsZJJKnZ9RqbALVwtK",
@@ -1915,6 +1915,9 @@
     },
     "playerNode": {
       "__id__": 37
+    },
+    "realPlayer": {
+      "__id__": 38
     },
     "dieClip": {
       "__uuid__": "cef645a9-0fe6-4ea6-ad6a-81a54f43e632"

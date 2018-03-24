@@ -9,6 +9,7 @@ cc.Class({
             default: null
         },
         playerNode: cc.Node,
+        realPlayer: cc.Node,
         dieClip: {
             url: cc.AudioClip,
             default: null
@@ -61,9 +62,9 @@ cc.Class({
     startGame() {
         cc.gamePlaying = true;
         this.playerNode.active = true;
-        this.playerNode.active = true;
         this.startBtn.active = false;
         this.restartBtn.active = false;
+        this.realPlayer.getComponent('PlayerReal').reborn();
         this.initSpeedRaiser();
         this.spawnEnemies();
     },
@@ -130,9 +131,26 @@ cc.Class({
         cc.audioEngine.play(this.dieClip, false, 1);
         this.stopSpawnEnemies();
         this.resetSpeedRaser();
-        this.restartBtn.active = true;
-        this.playerNode.active = false;
         cc.gamePlaying = false;
+        setTimeout(() => {
+            this.restartBtn.active = true;
+        }, 200);
+    },
+
+    showRankingBoard() {
+
+    },
+
+    dismissRankingBoard() {
+
+    },
+
+    showShare() {
+
+    },
+
+    dismissShare() {
+
     },
 
     handleClickStart() {
