@@ -44,7 +44,7 @@ cc.Class({
             this.jumpTime = 0;
         }, this);
         const jumpUpAction = cc.moveBy(0.3, cc.p(0, this.getStepHeight())).easing(cc.easeCubicActionOut());
-        const jumpDownAction = cc.moveTo(0.3, cc.p(this.initX, this.initY)).easing(cc.easeCubicActionIn());
+        const jumpDownAction = cc.moveTo(this.getStepDuration(), cc.p(this.initX, this.initY)).easing(cc.easeCubicActionIn());
         this.node.runAction(cc.sequence(jumpUpAction, jumpDownAction, jumpDownFinishAction));
         this.jumpTime ++;
     },
@@ -59,6 +59,14 @@ cc.Class({
         let retHeight = this.STEP_HEIGHT;
         for(let i = 0; i < this.jumpTime; i++) {
             retHeight *= 0.7;
+        }
+        return retHeight;
+    },
+
+    getStepDuration() {
+        let retHeight = 0.3;
+        for(let i = 0; i < this.jumpTime; i++) {
+            retHeight += retHeight * 0.3;
         }
         return retHeight;
     },

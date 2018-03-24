@@ -1738,6 +1738,12 @@
       {
         "__id__": 36
       }
-    ]
+    ],
+    "backgroundClip": {
+      "__uuid__": "081e429a-1787-4c28-a2cd-58a75a02ed47"
+    },
+    "beePrefab": {
+      "__uuid__": "3db1fe1b-6596-4380-b6d5-d8b40230d97b"
+    }
   }
 ]

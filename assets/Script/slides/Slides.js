@@ -27,9 +27,9 @@ cc.Class({
     },
 
     checkPerformRepeat() {
-        if (this.slides[0].x < -this.slides[0].width * this.slides[0].scale) {
+        if (this.slides[0].x < -this.slides[0].width * this.slides[0].scaleX) {
             this.slides.push(this.slides.shift());
-            this.slides[1].x = this.slides[0].x + this.slides[0].width * this.slides[0].scale;
+            this.slides[1].x = this.slides[0].x + this.slides[0].width * this.slides[0].scaleX;
         }
     },
 });
