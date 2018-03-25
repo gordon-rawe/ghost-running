@@ -35,8 +35,12 @@ cc.Class({
         this.moveSlideNodes(dt);
     },
 
+    getInitSpeed() {
+        return 1.5;
+    },
+
     initParams() {
-        cc.speedRatio = 1;
+        cc.speedRatio = this.getInitSpeed();
     },
 
     playBackgroundMusic() {
@@ -59,7 +63,7 @@ cc.Class({
         if(this.speedTimer){
             clearInterval(this.speedRaiser);
         }
-        cc.speedRatio = 1;
+        cc.speedRatio = this.getInitSpeed();
     },
 
     startGame() {
