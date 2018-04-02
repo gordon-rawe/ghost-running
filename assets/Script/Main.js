@@ -1,4 +1,4 @@
-const Slides = require('slides/Slides');
+const Slides = require('./slides/Slides');
 const Utils = require('./utils/Utils');
 cc.Class({
     extends: cc.Component,

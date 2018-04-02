@@ -50,7 +50,7 @@ const mockData = {
     "users": {
         "123": {
             "name": "wenlin.wang",
-            "avatar": "http://115.159.77.174:12010/public/game/2.png"
+            "avatar": "http://docs.cocos.com/creator/manual/zh/scripting/load-assets/asset-in-inspector-dnd.png"
         }
     }
 };

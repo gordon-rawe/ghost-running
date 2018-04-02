@@ -31,11 +31,11 @@ cc.Class({
     displayIcon(iconUrl) {
     	console.log(iconUrl);
         let self = this;
-        // cc.loader.load({url: iconUrl, type: 'image'}, function (err, texture) {
-        //     if (err) return cc.error(err.message || err);
-        //     self.loaded_.push(texture);
-        //     self.userIcon.spriteFrame = new cc.SpriteFrame(texture);
-        // });
+        cc.loader.load(iconUrl, {isCrossOrigin: true}, function (err, texture) {
+            if (err) return cc.error(err.message || err);
+            self.loaded_.push(texture);
+            self.userIcon.spriteFrame = new cc.SpriteFrame(texture);
+        });
     },
 
     onDestroy() {
