@@ -97,7 +97,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "CEIL": 0,
+    "CEIL": -100,
     "FLOOR": -204
   },
   {
