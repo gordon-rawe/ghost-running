@@ -5,7 +5,8 @@ cc.Class({
         
     },
 
-    onLoad () {        
+    onLoad () {
+        this.initStates();
         this.initControl();
     },
 
@@ -21,23 +22,46 @@ cc.Class({
     },
 
     performJump() {
-        this.getComponent(cc.Animation).play('first-jump');
-        const jumpUpAction = cc.moveBy(0.30, cc.p(0, 100));
-        const jumpDownAction = cc.moveBy(0.30, cc.p(0, -100));
-        this.node.runAction(cc.sequence(jumpUpAction, jumpDownAction, cc.callFunc(() => {
-            this.getComponent(cc.Animation).play('normal');
-        })));
+        if(!this.clickable) {
+            return;
+        }
+        if(this.jumpTime === 0) {
+            this.node.stopAllActions();
+            this.getComponent(cc.Animation).play('first-jump');
+            const jumpUpAction = cc.moveTo(this.FIRST_STAGE_DURATION, cc.p(this.initX, this.FIRST_STAGE_HEIGHT + this.initY));
+            const jumpDownAction = cc.moveTo(this.FIRST_STAGE_DURATION, cc.p(this.initX, 0 + this.initY));
+            this.node.runAction(cc.sequence(jumpUpAction, jumpDownAction, cc.callFunc(() => {
+                this.getComponent(cc.Animation).play('normal');
+                this.jumpTime = 0;
+            })));
+            this.jumpTime ++;
+        }else {
+            if(this.node.y < this.SECOND_THRESHOLD + this.initY) {
+                return;
+            }
+            this.clickable = false;
+            this.node.stopAllActions();
+            this.getComponent(cc.Animation).play('second-jump');
+            const jumpUpAction = cc.moveTo(this.SECOND_STAGE_DURATION, cc.p(this.initX, this.SECOND_STAGE_HEIGHT + this.initY));
+            const jumpDownAction = cc.moveTo(this.SECOND_STAGE_DURATION * 1.8, cc.p(this.initX, 0 + this.initY));
+            this.node.runAction(cc.sequence(jumpUpAction, jumpDownAction, cc.callFunc(() => {
+                this.getComponent(cc.Animation).play('normal');
+                this.jumpTime = 0;
+                this.clickable = true;
+            })));
+            this.jumpTime ++;
+        }
     },
 
-    danceLikePhantom() {
-        const jumpUpAction = cc.moveBy(0.25, cc.p(0, 80));
-        const jumpDownAction = cc.moveBy(0.25, cc.p(0, -80));
-        this.node.runAction(cc.repeatForever(cc.sequence(jumpUpAction, jumpDownAction)));
+    initStates() {
+        this.jumpTime = 0;
+        this.FIRST_STAGE_HEIGHT = 100;
+        this.SECOND_STAGE_HEIGHT = 180;
+        this.SECOND_THRESHOLD = 50;
+        this.FIRST_STAGE_DURATION = 0.3;
+        this.SECOND_STAGE_DURATION = 0.3;
+        this.initY = this.node.y;
+        this.initX = this.node.x;
+        this.clickable = true;
     },
-
-    start () {
-
-    },
-
-    // update (dt) {},
 });

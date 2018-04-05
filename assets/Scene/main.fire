@@ -757,7 +757,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "running_man",
+    "_name": "ninja",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -856,6 +856,9 @@
       },
       {
         "__uuid__": "c3708aaf-a43c-46ae-8faf-aab05c798359"
+      },
+      {
+        "__uuid__": "5414c384-b21e-49ce-98a9-cc1e0e0063a3"
       }
     ],
     "playOnLoad": true
