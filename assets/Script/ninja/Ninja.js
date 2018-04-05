@@ -57,7 +57,7 @@ cc.Class({
         this.jumpTime = 0;
         this.FIRST_STAGE_HEIGHT = 100;
         this.SECOND_STAGE_HEIGHT = 180;
-        this.SECOND_THRESHOLD = 50;
+        this.SECOND_THRESHOLD = 30;
         this.FIRST_STAGE_DURATION = 0.3;
         this.SECOND_STAGE_DURATION = 0.3;
         this.initY = this.node.y;

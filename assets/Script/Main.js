@@ -13,8 +13,10 @@ cc.Class({
             url: cc.AudioClip,
             default: null
         },
+        misslePrefab: cc.Prefab,
         rankingBoard: cc.Node,
         runningMan: cc.Node,
+        startBtn: cc.Node,
     },
 
     onLoad: function () {
@@ -61,17 +63,17 @@ cc.Class({
     startGame() {
         cc.gamePlaying = true;
         // this.playerNode.active = true;
-        // this.startBtn.active = false;
+        this.startBtn.active = false;
         // this.restartBtn.active = false;
         // this.realPlayer.getComponent('PlayerReal').reborn();
         // this.initSpeedRaiser();
-        // this.spawnEnemies();
+        this.spawnEnemies();
         // this.dismissRankingBoard();
     },
 
     spawnEnemies() {
         this.spawnTimer = setInterval(() => {
-            this.randomGenerate();
+            this.generateBee();
         }, 2000);
     },
 
@@ -101,8 +103,8 @@ cc.Class({
     },
 
     generateBee() {
-        // const beeEnemy = cc.instantiate(this.beePrefab);
-        // this.node.addChild(beeEnemy);
+        const missleObstacle = cc.instantiate(this.misslePrefab);
+        this.node.addChild(missleObstacle);
     },
 
     generateBigRock() {

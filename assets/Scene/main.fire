@@ -72,10 +72,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 27
+        "__id__": 29
       },
       {
-        "__id__": 28
+        "__id__": 30
       }
     ],
     "_prefab": null,
@@ -877,7 +877,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "missle",
+    "_name": "btn_start",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -888,10 +888,13 @@
     "_components": [
       {
         "__id__": 26
+      },
+      {
+        "__id__": 27
       }
     ],
     "_prefab": null,
-    "_id": "eeCL4MVB9Lh7FnY3wl7jUH",
+    "_id": "baIAnms65IcLDK2WJRvjpr",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -908,17 +911,17 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 36,
-      "height": 55
+      "width": 300,
+      "height": 104
     },
-    "_rotationX": 270,
-    "_rotationY": 270,
-    "_scaleX": 0.7,
-    "_scaleY": 0.7,
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 0.5,
+    "_scaleY": 0.5,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -93,
-      "y": -203
+      "x": 0,
+      "y": -63
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -936,7 +939,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "8cbfdf6d-926c-4c02-b8ed-a44281212276"
+      "__uuid__": "ead30040-ec15-40b1-a5e5-914951b9e9f4"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -952,6 +955,71 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": null
+  },
+  {
+    "__type__": "cc.Button",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 25
+    },
+    "_enabled": true,
+    "transition": 0,
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 211,
+      "g": 211,
+      "b": 211,
+      "a": 255
+    },
+    "hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "duration": 0.2,
+    "zoomScale": 1.1,
+    "clickEvents": [
+      {
+        "__id__": 28
+      }
+    ],
+    "_N$interactable": true,
+    "_N$enableAutoGrayEffect": false,
+    "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 214,
+      "g": 214,
+      "b": 214,
+      "a": 255
+    },
+    "_N$disabledColor": {
+      "__type__": "cc.Color",
+      "r": 124,
+      "g": 124,
+      "b": 124,
+      "a": 255
+    },
+    "_N$normalSprite": null,
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
+    "_N$disabledSprite": null,
+    "_N$target": {
+      "__id__": 25
+    }
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 2
+    },
+    "component": "Main",
+    "handler": "startGame",
+    "customEventData": ""
   },
   {
     "__type__": "cc.Canvas",
@@ -988,11 +1056,17 @@
     "dieClip": {
       "__uuid__": "cef645a9-0fe6-4ea6-ad6a-81a54f43e632"
     },
+    "misslePrefab": {
+      "__uuid__": "399c4753-8eb3-4870-95e1-c5dbe205f9f2"
+    },
     "rankingBoard": {
       "__id__": 10
     },
     "runningMan": {
       "__id__": 21
+    },
+    "startBtn": {
+      "__id__": 25
     }
   }
 ]
