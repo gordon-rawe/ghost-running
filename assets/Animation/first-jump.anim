@@ -1,0 +1,67 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "RunningManJump",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.5166666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "5c912c4b-f550-496c-baec-a823cdf0aed7"
+            }
+          },
+          {
+            "frame": 0.05,
+            "value": {
+              "__uuid__": "200f1994-514b-48fc-bee4-6872ded878e5"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "c8d05de7-7f86-4cbf-ba57-a20f571bb7e3"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "1f643fed-a5fb-4091-8022-66b8768512f5"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "f719c37f-299c-495b-b79f-cec02f5a5f04"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "de41645e-6c50-4ee3-af58-ec4306e770ea"
+            }
+          },
+          {
+            "frame": 0.4166666666666667,
+            "value": {
+              "__uuid__": "ca6134a4-c6c3-437f-861f-cc34e5d82de7"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "6c6b9103-df29-4d48-963a-13778c61c9e5"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

@@ -15,7 +15,9 @@ cc.Class({
     danceLikePhantom() {
         const jumpUpAction = cc.moveBy(0.25, cc.p(0, 15));
         const jumpDownAction = cc.moveBy(0.25, cc.p(0, -15));
-        this.node.runAction(cc.repeatForever(cc.sequence(jumpUpAction, jumpDownAction)));
+        this.node.runAction(c.sequence(jumpUpAction, jumpDownAction, () => {
+            
+        }));
     },
 
     becomeAlive() {
