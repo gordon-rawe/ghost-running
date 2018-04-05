@@ -9,6 +9,10 @@ cc.Class({
             url: cc.AudioClip,
             default: null
         },
+        gamingClip: {
+            url: cc.AudioClip,
+            default: null
+        },
         dieClip: {
             url: cc.AudioClip,
             default: null
@@ -20,7 +24,7 @@ cc.Class({
     },
 
     onLoad: function () {
-        // this.playBackgroundMusic();
+        this.playBackgroundMusic();
         this.initParams();
         this.enableCollistionDetection();
     },
@@ -37,8 +41,13 @@ cc.Class({
         cc.speedRatio = this.getInitSpeed();
     },
 
-    playBackgroundMusic() {
+    playBackgroundMusic() {cc.audioEngine.stopAll();
         cc.audioEngine.play(this.backgroundClip, true, 1);
+    },
+
+    playGamingMusic() {
+        cc.audioEngine.stopAll();
+        cc.audioEngine.play(this.gamingClip, true, 1);
     },
 
     moveSlideNodes(dt) {
@@ -64,6 +73,7 @@ cc.Class({
         cc.gamePlaying = true;
         // this.playerNode.active = true;
         this.startBtn.active = false;
+        this.playGamingMusic();
         // this.restartBtn.active = false;
         // this.realPlayer.getComponent('PlayerReal').reborn();
         // this.initSpeedRaiser();
