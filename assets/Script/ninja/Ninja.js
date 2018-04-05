@@ -43,7 +43,7 @@ cc.Class({
             this.node.stopAllActions();
             this.getComponent(cc.Animation).play('second-jump');
             const jumpUpAction = cc.moveTo(this.SECOND_STAGE_DURATION, cc.p(this.initX, this.SECOND_STAGE_HEIGHT + this.initY));
-            const jumpDownAction = cc.moveTo(this.SECOND_STAGE_DURATION * 1.8, cc.p(this.initX, 0 + this.initY));
+            const jumpDownAction = cc.moveTo(this.SECOND_STAGE_DURATION * 1.6, cc.p(this.initX, 0 + this.initY));
             this.node.runAction(cc.sequence(jumpUpAction, jumpDownAction, cc.callFunc(() => {
                 this.getComponent(cc.Animation).play('normal');
                 this.jumpTime = 0;
