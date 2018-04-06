@@ -11,6 +11,6 @@ cc.Class({
     },
 
     getSpaceBetween() {
-        return 80;
+        return 50;
     },
 });

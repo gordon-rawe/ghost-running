@@ -18,6 +18,7 @@ cc.Class({
             default: null
         },
         misslePrefab: cc.Prefab,
+        wellPrefab: cc.Prefab,
         rankingBoard: cc.Node,
         runningMan: cc.Node,
         startBtn: cc.Node,
@@ -39,6 +40,7 @@ cc.Class({
 
     initParams() {
         cc.speedRatio = this.getInitSpeed();
+        this.runningMan.zIndex = 100;
     },
 
     playBackgroundMusic() {cc.audioEngine.stopAll();
@@ -83,19 +85,19 @@ cc.Class({
 
     spawnEnemies() {
         this.spawnTimer = setInterval(() => {
-            this.generateBee();
-        }, 2000);
+            this.randomGenerate();
+        }, 1000);
     },
 
     randomGenerate() {
-        const seed = Math.floor(cc.random0To1() * 100) % 4;
+        const seed = Math.floor(cc.random0To1() * 100) % 2;
         switch(seed) {
             case 0:
             case 4:
-                this.generateBee();
+                this.generateMissile();
                 break;
             case 1:
-                this.generateBigRock();
+                this.generateWell();
                 break;
             case 2:
                 this.generateMiddleRock();
@@ -112,14 +114,14 @@ cc.Class({
         // }
     },
 
-    generateBee() {
+    generateMissile() {
         const missleObstacle = cc.instantiate(this.misslePrefab);
         this.node.addChild(missleObstacle);
     },
 
-    generateBigRock() {
-        // const rock = cc.instantiate(this.bigRock);
-        // this.node.addChild(rock);
+    generateWell() {
+        const wellPrefab = cc.instantiate(this.wellPrefab);
+        this.node.addChild(wellPrefab);
     },
 
     generateMiddleRock() {
