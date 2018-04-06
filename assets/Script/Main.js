@@ -24,9 +24,9 @@ cc.Class({
     },
 
     onLoad: function () {
-        this.playBackgroundMusic();
         this.initParams();
         this.enableCollistionDetection();
+        this.playBackgroundMusic();
     },
 
     update: function (dt) {
@@ -133,18 +133,18 @@ cc.Class({
     },
 
     enableCollistionDetection() {
-        // cc.director.getCollisionManager().enabled = true;
-        // this.node.on('collision', (event) => {
-        //     this.gameOver();
-        // });
+        cc.director.getCollisionManager().enabled = true;
+        this.node.on('collision', (event) => {
+            this.gameOver();
+        });
     },
 
     gameOver() {
-        // cc.audioEngine.play(this.dieClip, false, 1);
-        // this.stopSpawnEnemies();
-        // this.resetSpeedRaser();
-        // this.showRankingBoard();
-        // cc.gamePlaying = false;
+        cc.audioEngine.play(this.dieClip, false, 1);
+        this.stopSpawnEnemies();
+        this.resetSpeedRaser();
+        this.showRankingBoard();
+        cc.gamePlaying = false;
         // setTimeout(() => {
         //     this.restartBtn.active = true;
         // }, 200);

@@ -64,4 +64,10 @@ cc.Class({
         this.initX = this.node.x;
         this.clickable = true;
     },
+
+    onCollisionEnter(other, self) {
+        // this.beKilled();
+        console.log('be killed');
+        // this.node.dispatchEvent(new cc.Event.EventCustom('collision', true));
+    },
 });
