@@ -5,31 +5,37 @@ cc.Class({
         slides: [cc.Node]
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    start () {
-
+    onLoad() {
+        this.initParams();
+        this.slides[0].x = this.ZERO_X;
+        this.slides[1].x = this.ZERO_X + this.slides[0].width * this.slides[0].scaleX + this.getSpaceBetween();
     },
 
-    update (dt) {},
+    initParams() {
+        this.WINDOW_SIZE = cc.director.getWinSize();
+        this.ZERO_X = -this.WINDOW_SIZE.width / 2;
+    },
 
     moveCamera(moveX) {
-        this.checkPerformRepeat();
         this.slides.forEach(slide => {
             slide.x -= moveX * this.getSpeed();
         });
+        this.checkPerformRepeat();
     },
 
     getSpeed() {
         return 100;
     },
 
+    getSpaceBetween() {
+        return 0;
+    },
+
     checkPerformRepeat() {
-        if (this.slides[0].x < -this.slides[0].width * this.slides[0].scaleX) {
+        const nowRight = this.slides[0].x + this.slides[0].width * this.slides[0].scaleX;
+        if (nowRight <= this.ZERO_X) {
             this.slides.push(this.slides.shift());
-            this.slides[1].x = this.slides[0].x + this.slides[0].width * this.slides[0].scaleX;
+            this.slides[1].x = nowRight + this.slides[0].width * this.slides[0].scaleX + this.getSpaceBetween() * 2;
         }
     },
 });

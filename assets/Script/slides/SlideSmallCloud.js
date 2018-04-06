@@ -7,10 +7,10 @@ cc.Class({
     },
 
     getSpeed() {
-        return 90;
+        return 60;
     },
 
     getSpaceBetween() {
-        return 20;
+        return 180;
     },
 });
