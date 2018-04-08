@@ -22,6 +22,8 @@ cc.Class({
         rankingBoard: cc.Node,
         runningMan: cc.Node,
         startBtn: cc.Node,
+        shareBtn: cc.Node,
+        restartBtn: cc.Node,
     },
 
     onLoad: function () {
@@ -40,11 +42,17 @@ cc.Class({
 
     initParams() {
         cc.speedRatio = this.getInitSpeed();
+        cc.shouldDestroy = false;
         this.runningMan.zIndex = 100;
     },
 
-    playBackgroundMusic() {cc.audioEngine.stopAll();
+    playBackgroundMusic() {
+        cc.audioEngine.stopAll();
         cc.audioEngine.play(this.backgroundClip, true, 1);
+    },
+
+    playDieMusic() {
+        cc.audioEngine.play(this.dieClip, false, 1);
     },
 
     playGamingMusic() {
@@ -53,14 +61,18 @@ cc.Class({
     },
 
     moveSlideNodes(dt) {
-        this.slideNodes.forEach(slide => {
-            slide.moveCamera(dt * cc.speedRatio * 1.5);
-        });
+        if(cc.gamePlaying) {
+            this.slideNodes.forEach(slide => {
+                slide.moveCamera(dt * cc.speedRatio * 1.5);
+            });
+        }
     },
 
     initSpeedRaiser() {
         this.speedTimer = setInterval(() => {
-            cc.speedRatio += 0.08;
+            if(cc.speedRatio <= 2) {
+                cc.speedRatio += 0.08;
+            }
         }, 5000);
     },
 
@@ -73,14 +85,26 @@ cc.Class({
 
     startGame() {
         cc.gamePlaying = true;
-        // this.playerNode.active = true;
+        cc.shouldDestroy = false;
+        this.restartBtn.active = false;
         this.startBtn.active = false;
-        this.playGamingMusic();
-        // this.restartBtn.active = false;
-        // this.realPlayer.getComponent('PlayerReal').reborn();
-        // this.initSpeedRaiser();
+        this.runningMan.getComponent('Ninja').reborn();
+        this.initSpeedRaiser();
         this.spawnEnemies();
-        // this.dismissRankingBoard();
+        this.playGamingMusic();
+        this.dismissRankingBoard();
+    },
+
+    gameOver() {
+        cc.shouldDestroy = true;
+        this.playDieMusic();
+        this.stopSpawnEnemies();
+        this.resetSpeedRaser();
+        this.showRankingBoard();
+        this.playBackgroundMusic();
+        setTimeout(() => {
+            this.restartBtn.active = true;
+        }, 200);
     },
 
     spawnEnemies() {
@@ -93,25 +117,18 @@ cc.Class({
         const seed = Math.floor(cc.random0To1() * 100) % 2;
         switch(seed) {
             case 0:
-            case 4:
                 this.generateMissile();
                 break;
             case 1:
                 this.generateWell();
                 break;
-            case 2:
-                this.generateMiddleRock();
-                break;
-            default:
-                this.generateSmallRock();
-                break;
         }
     },
 
     stopSpawnEnemies() {
-        // if(this.spawnTimer) {
-        //     clearInterval(this.spawnTimer);
-        // }
+        if(this.spawnTimer) {
+            clearInterval(this.spawnTimer);
+        }
     },
 
     generateMissile() {
@@ -124,16 +141,6 @@ cc.Class({
         this.node.addChild(wellPrefab);
     },
 
-    generateMiddleRock() {
-        // const rock = cc.instantiate(this.middleRock);
-        // this.node.addChild(rock);
-    },
-    
-    generateSmallRock() {
-        // const rock = cc.instantiate(this.smallRock);
-        // this.node.addChild(rock);
-    },
-
     enableCollistionDetection() {
         cc.director.getCollisionManager().enabled = true;
         this.node.on('collision', (event) => {
@@ -141,33 +148,18 @@ cc.Class({
         });
     },
 
-    gameOver() {
-        cc.audioEngine.play(this.dieClip, false, 1);
-        this.stopSpawnEnemies();
-        this.resetSpeedRaser();
-        this.showRankingBoard();
-        cc.gamePlaying = false;
-        // setTimeout(() => {
-        //     this.restartBtn.active = true;
-        // }, 200);
-    },
-
     showRankingBoard() {
-        // this.shareBtn.active = true;
-        // if(this.rankingBoard.active) {
-    	// 	return;
-    	// }
-        // this.rankingBoard.active = true;
-        // this.rankingBoard.getComponent('RankingScrollView').requestUsers();
+        this.shareBtn.active = true;
+        if(this.rankingBoard.active) {
+    		return;
+    	}
+        this.rankingBoard.active = true;
+        this.rankingBoard.getComponent('RankingScrollView').requestUsers();
     },
 
     dismissRankingBoard() {
-        // this.shareBtn.active = false;
-        // this.rankingBoard.active = false;
-    },
-
-    showShare() {
-
+        this.shareBtn.active = false;
+        this.rankingBoard.active = false;
     },
 
     dismissShare() {

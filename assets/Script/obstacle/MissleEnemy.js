@@ -7,6 +7,6 @@ cc.Class({
     },
 
     getSpeed() {
-        return 250;
+        return 200;
     },
 });

@@ -11,6 +11,7 @@ cc.Class({
         utils.requestRankings()
             .then(users=>{
                 this.displayUsers(users);
+                console.log(users);
             })
             .catch(exception=>{
                 

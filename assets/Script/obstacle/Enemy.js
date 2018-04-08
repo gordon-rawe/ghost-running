@@ -21,9 +21,9 @@ cc.Class({
     },
 
     checkAndDestroy() {
-        if(this.node.x < -(this.winInfo.width / 2 + this.node.width) || !cc.gamePlaying) {
+        if(this.node.x < -(this.winInfo.width / 2 + this.node.width) || cc.shouldDestroy) {
             this.node.destroy();
-            console.log("bee node destroyed...");
+            console.log("Enemy node destroyed...");
         }
     },
 
@@ -41,6 +41,8 @@ cc.Class({
     },
 
     moveCamera(dt) {
-        this.node.x -= dt * this.getSpeed() * cc.speedRatio;
+        if(cc.gamePlaying) {
+            this.node.x -= dt * this.getSpeed() + cc.speedRatio;
+        }
     },
 });
