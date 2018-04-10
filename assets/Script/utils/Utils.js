@@ -1,3 +1,25 @@
+
+// #上报比分
+// curl -X POST -d '{"open_id": "011sEM6e036AAA1Q1S6e0ypW6e0sEM62", "score": 1128}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/score
+
+// #登录user
+// curl -X POST -d '{
+//     "open_id": "011sEM6e036AAA1Q1S6e0ypW6e0sEM62", 
+//     "user_info": {
+//         "nickName":"罗明川",
+//         "gender":1,
+//         "language":"en",
+//         "city":"Jiading",
+//         "province":"Shanghai",
+//         "country":"China",
+//         "avatarUrl":"https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKicowSX3GxwTaPktbmDyBtKeectPOk8s79AESic3yePKKT5awWdQmWEI5hKDsDpQsc2vvrGwB9IOAg/0"
+//     }
+// }' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/login
+
+// #查看比分列表(传了好友[id],会分页返回有效好友的比分数据，如果没有传,返回所有总榜分也数据)
+// curl -X POST -d '{"count": 10, "cursor": 0, "oids": ["011sEM6e036AAA1Q1S6e0ypW6e0sEM62"]}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/rankings
+// curl -X POST -d '{"count": 10, "cursor": 0, "oids": []}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/rankings
+
 const RANKING_URL = 'http://10.2.201.137:3000/runrun/rank';
 const ACK_LOGIN = 'http://10.2.201.137:3000/runrun/users/'
 const UPLOAD_SCORE = 'http://10.2.201.137:3000/runrun/score/';
