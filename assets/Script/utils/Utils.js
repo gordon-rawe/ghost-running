@@ -23,11 +23,12 @@
 // 根据code获取openid
 // curl -X POST -d '{"code": "001XD7fv0tjd8c178Cev0wQofv0XD7fy"}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/oauth
 
+const { httpPost } = require('./HttpUtils');
+
 const RANKING_URL = 'http://122.152.248.22:8964/ghostrun/rankings/';
 const ACK_LOGIN = 'http://122.152.248.22:8964/ghostrun/login/'
 const UPLOAD_SCORE = 'http://122.152.248.22:8964/ghostrun/score/';
 const OAUTH = 'http://122.152.248.22:8964/ghostrun/oauth/';
-const { httpPost } = require('./HttpUtils');
 const KEY_OPEN_ID = 'open_id';
 
 const guid = () => {
@@ -37,7 +38,7 @@ const guid = () => {
     });
 }
 
-module.exports.shareAppMessage = () => {
+const shareAppMessage = () => {
 	if(window.wx) {
 		wx.shareAppMessage({
 			title: '跑跳忍者',
@@ -49,12 +50,12 @@ module.exports.shareAppMessage = () => {
 	}
 }
 
-module.exports.requestRankings = () => {
+const requestRankings = () => {
 	return httpPost(RANKING_URL,{count: 10, cursor: 0, oids: []});
 }
 
-module.exports.uploadLogin = () => {
-	acquireOpenId()
+const uploadLogin = () => {
+	return acquireOpenId()
 		.then(open_id => {
 			window.open_id = open_id;
 			if(window.wx) {
@@ -65,10 +66,10 @@ module.exports.uploadLogin = () => {
 					});
 				});
 			} else {
-				return resolve({
+				return {
 					userName: '用户 ' + open_id, 
 					avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKicowSX3GxwTaPktbmDyBtKeectPOk8s79AESic3yePKKT5awWdQmWEI5hKDsDpQsc2vvrGwB9IOAg/0"
-				});
+				};
 			}
 		})
 		.then((userInfo) => {
@@ -76,7 +77,7 @@ module.exports.uploadLogin = () => {
 		});
 }
 
-module.exports.acquireOpenId = () => {
+const acquireOpenId = () => {
 	return new Promise((resolve, reject) => {
 		const open_id = getPref(KEY_OPEN_ID);
 		if(open_id) {
@@ -105,18 +106,26 @@ module.exports.acquireOpenId = () => {
 	});
 }
 
-module.exports.uploadScore = (score) => {
+const uploadScore = (score) => {
 	return httpPost(UPLOAD_SCORE, {score: score, open_id: window.open_id});
 }
 
-module.exports.savePref = (key, value) => {
+const savePref = (key, value) => {
 	window.wx ? wx.setStorage({key: key, data: value}) : cc.sys.localStorage.setItem(key, value);
 }
 
-module.exports.getPref = (key) => {
+const getPref = (key) => {
 	try{
 		return window.wx ? wx.getStorageSync(key) : cc.sys.localStorage.getItem(key);
 	}catch(ignored){
 		return "";
 	}
 }
+
+module.exports.shareAppMessage = shareAppMessage;
+module.exports.requestRankings = requestRankings;
+module.exports.uploadLogin = uploadLogin;
+module.exports.uploadScore = uploadScore;
+module.exports.acquireOpenId = acquireOpenId;
+module.exports.savePref = savePref;
+module.exports.getPref = getPref;

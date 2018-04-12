@@ -29,7 +29,7 @@ module.exports.httpPost = (url, params) => {
                 const respone = xhr.responseText;
                 resolve(respone);
             } else {
-                reject(xhr.status);
+                reject('request fail with status -> ' + xhr.status);
             }
         };
         xhr.open("POST", url, true);

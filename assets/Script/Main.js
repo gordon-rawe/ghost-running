@@ -1,5 +1,5 @@
 const Slides = require('./slides/Slides');
-const Utils = require('./utils/Utils');
+const { uploadLogin } = require('./utils/Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -30,6 +30,13 @@ cc.Class({
         this.initParams();
         this.enableCollistionDetection();
         this.playBackgroundMusic();
+        uploadLogin()
+            .then(data => {
+                console.log(data);
+            })
+            .catch(errorInfo => {
+                console.log(errorInfo);
+            });
     },
 
     update: function (dt) {
