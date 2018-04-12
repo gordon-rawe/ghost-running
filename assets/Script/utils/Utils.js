@@ -20,180 +20,103 @@
 // curl -X POST -d '{"count": 10, "cursor": 0, "oids": ["011sEM6e036AAA1Q1S6e0ypW6e0sEM62"]}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/rankings
 // curl -X POST -d '{"count": 10, "cursor": 0, "oids": []}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/rankings
 
-const RANKING_URL = 'http://10.2.201.137:3000/runrun/rank';
-const ACK_LOGIN = 'http://10.2.201.137:3000/runrun/users/'
-const UPLOAD_SCORE = 'http://10.2.201.137:3000/runrun/score/';
+// 根据code获取openid
+// curl -X POST -d '{"code": "001XD7fv0tjd8c178Cev0wQofv0XD7fy"}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/oauth
 
-const mapData = (rawData) => {
-	const users = rawData.users;
-	return rawData.ranks.map(rank => {
-		rank.name = users[rank.uid].name;
-		rank.avatar = users[rank.uid].avatar;
-		return rank;
-	});
-}
+const RANKING_URL = 'http://122.152.248.22:8964/ghostrun/rankings/';
+const ACK_LOGIN = 'http://122.152.248.22:8964/ghostrun/login/'
+const UPLOAD_SCORE = 'http://122.152.248.22:8964/ghostrun/score/';
+const OAUTH = 'http://122.152.248.22:8964/ghostrun/oauth/';
+const { httpPost } = require('./HttpUtils');
+const KEY_OPEN_ID = 'open_id';
 
-const isWechat = () => {
-	try {
-		return wx
-	} catch(ex) {
-		return false;
-	}
-}
-
-const mockData = {
-    "ranks": [
-        {
-            "rank": 1,
-            "uid": "123",
-            "score": "1221"
-		},
-		{
-            "rank": 2,
-            "uid": "123",
-            "score": "1221"
-		},
-		{
-            "rank": 3,
-            "uid": "123",
-            "score": "1221"
-		},
-		{
-            "rank": 4,
-            "uid": "123",
-            "score": "1221"
-		},
-		{
-            "rank": 5,
-            "uid": "123",
-            "score": "1221"
-        }
-    ],
-    "users": {
-        "123": {
-            "name": "wenlin.wang",
-            "avatar": "http://docs.cocos.com/creator/manual/zh/scripting/load-assets/asset-in-inspector-dnd.png"
-        }
-    }
-};
-
-module.exports.shareAppMessage = () => {
-	if(!isWechat()) {
-		console.log('not wechat');
-		return;
-	}
-    wx.shareAppMessage({
-        title: '鬼鬼快跑',
-        imageUrl: 'http://115.159.77.174:12010/public/game/2.png', //todo
-        desc: '鬼鬼快跑真好玩，快来玩玩吧！', //todo
+const guid = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
     });
 }
 
+module.exports.shareAppMessage = () => {
+	if(window.wx) {
+		wx.shareAppMessage({
+			title: '跑跳忍者',
+			imageUrl: 'http://115.159.77.174:12010/public/game/2.png', //todo
+			desc: '跑跳忍者就是酷，不服来挑战！', //todo
+		});
+	} else {
+		alert('非微信环境不允许分享');
+	}
+}
+
 module.exports.requestRankings = () => {
-	return new Promise((resolve, reject)=> {
-		if(isWechat()) {
-			try{
-				wx.request({
-					url: RANKING_URL, 
-					method: 'GET',
-					success: data => {
-						resolve(mapData(data.data));
-					},
-					fail: errorInfo => {
-						reject(errorInfo);
-					},
-				});
-			} catch (exception) {
-				reject(exception);
-			}
-		}else {
-			resolve(mapData(mockData));
-		}
-	});
+	return httpPost(RANKING_URL,{count: 10, cursor: 0, oids: []});
 }
 
 module.exports.uploadLogin = () => {
-	if(!isWechat()) {
-		console.log('not wechat');
-		return;
-	}
-	wx.login({
-		success: () => {
-			wx.getUserInfo({
-				success: data => {
-					wx.request({
-						url: ACK_LOGIN + data.userInfo.userId, 
-						data: data.userInfo,
-						method:'POST',
-						success: ()=>{
-							// wx.showToast({title: 'uploadLogin success' + data.userInfo.userId});
-						},
-						// fail: errorInfo => wx.showToast({title: 'wx.request fail '}),
+	acquireOpenId()
+		.then(open_id => {
+			window.open_id = open_id;
+			if(window.wx) {
+				return new Promise((resolve, reject) => {
+					wx.getUserInfo({
+						success: data => resolve(data.userInfo),
+						fail: errorInfo => reject(errorInfo),
 					});
-				},
-				// fail: errorInfo => wx.showToast({title: 'getUserInfo fail '}),
+				});
+			} else {
+				return resolve({
+					userName: '用户 ' + open_id, 
+					avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKicowSX3GxwTaPktbmDyBtKeectPOk8s79AESic3yePKKT5awWdQmWEI5hKDsDpQsc2vvrGwB9IOAg/0"
+				});
+			}
+		})
+		.then((userInfo) => {
+			return httpPost(ACK_LOGIN, {open_id: open_id, user_info: userInfo});
+		});
+}
+
+module.exports.acquireOpenId = () => {
+	return new Promise((resolve, reject) => {
+		const open_id = getPref(KEY_OPEN_ID);
+		if(open_id) {
+			return resolve(open_id);
+		}
+		if(window.wx) {
+			wx.login({
+				success: data => {
+					httpPost(OAUTH, { code: data.code })
+						.then(data => {
+							const userInfo = JSON.parse(data);
+							savePref(KEY_OPEN_ID, userInfo.open_id);
+							resolve(userInfo.open_id);
+						})
+						.catch(errorStatus => {
+							reject(errorStatus);
+						});
+					},
+				fail: errorInfo => reject(errorInfo),
 			});
-		},
-		// fail: errorInfo => wx.showToast({title: 'login fail '}),
+		} else {
+			const gid = guid();
+			savePref(KEY_OPEN_ID, gid);
+			resolve(gid);
+		}
 	});
 }
 
 module.exports.uploadScore = (score) => {
-	if(!isWechat()) {
-		console.log('not wechat');
-		return;
-	}
-	wx.getUserInfo({
-		success: data => {
-			wx.request({
-				url: UPLOAD_SCORE + data.userInfo.userId,
-				data: {
-					score: score
-				},
-				method:'POST',
-				// fail: errorInfo => {
-				// 	wx.showToast({title: 'wx.request fail ' + JSON.stringify(errorInfo)});
-				// },
-				// success: () => {
-				// 	wx.showToast({title: 'uploadScore success' + data.userInfo.userId});
-				// },
-			});
-		},
-		// fail: errorInfo => {
-		// 	wx.showToast({title: 'getUserInfo fail ' + JSON.stringify(errorInfo)});
-		// },
-	});
+	return httpPost(UPLOAD_SCORE, {score: score, open_id: window.open_id});
 }
 
 module.exports.savePref = (key, value) => {
-	if(isWechat()) {
-		try{
-			wx.setStorage({
-			  key: key,
-			  data: value,
-			});
-		}catch(ignored){}
-	} else {
-		try{
-			return cc.sys.localStorage.setItem(key, value);
-		}catch(ignored){}
-	}
+	window.wx ? wx.setStorage({key: key, data: value}) : cc.sys.localStorage.setItem(key, value);
 }
 
 module.exports.getPref = (key) => {
-	if(isWechat()) {
-		try{
-			return wx.getStorageSync(key);
-		}catch(ignored){
-			return "";
-		}
-	} else {
-		try{
-			return cc.sys.localStorage.getItem(key);
-		}catch(ignored){
-			return "";
-		}
+	try{
+		return window.wx ? wx.getStorageSync(key) : cc.sys.localStorage.getItem(key);
+	}catch(ignored){
+		return "";
 	}
 }
-
-
