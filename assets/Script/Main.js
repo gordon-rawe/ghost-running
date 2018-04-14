@@ -161,7 +161,7 @@ cc.Class({
     		return;
     	}
         this.rankingBoard.active = true;
-        this.rankingBoard.getComponent('RankingScrollView').requestUsers();
+        this.rankingBoard.getComponent('RankingScrollView').uploadScoreAndRequestRankings(1000);
     },
 
     dismissRankingBoard() {

@@ -24,11 +24,11 @@
 // curl -X POST -d '{"code": "001XD7fv0tjd8c178Cev0wQofv0XD7fy"}' --header "Content-Type:application/json" http://122.152.248.22:8964/ghostrun/oauth
 
 const { httpPost } = require('./HttpUtils');
-
-const RANKING_URL = 'http://122.152.248.22:8964/ghostrun/rankings/';
-const ACK_LOGIN = 'http://122.152.248.22:8964/ghostrun/login/'
-const UPLOAD_SCORE = 'http://122.152.248.22:8964/ghostrun/score/';
-const OAUTH = 'http://122.152.248.22:8964/ghostrun/oauth/';
+const API_HOST = 'http://localhost:8964';//http://122.152.248.22:8964
+const RANKING_URL = `${API_HOST}/ghostrun/rankings/`;
+const ACK_LOGIN = `${API_HOST}/ghostrun/login/`;
+const UPLOAD_SCORE = `${API_HOST}/ghostrun/score/`;
+const OAUTH = `${API_HOST}/ghostrun/oauth/`;
 const KEY_OPEN_ID = 'open_id';
 
 const guid = () => {

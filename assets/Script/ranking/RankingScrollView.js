@@ -1,4 +1,4 @@
-const utils = require('../utils/Utils');
+const Utils = require('../utils/Utils');
 
 cc.Class({
     extends: cc.ScrollView,
@@ -7,14 +7,16 @@ cc.Class({
 
     },
 
-    requestUsers() {
-        utils.requestRankings()
-            .then(users=>{
-                this.displayUsers(users);
-                console.log(users);
+    uploadScoreAndRequestRankings(score) {
+        Utils.uploadScore(score)
+            .then(() => {
+                return Utils.requestRankings();
+            })
+            .then(response=>{
+                this.displayUsers(response.result);
             })
             .catch(exception=>{
-                
+                console.log(exception);
             });
     },
 

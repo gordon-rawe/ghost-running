@@ -10,7 +10,8 @@ cc.Class({
         this.node.removeAllChildren();
         users.forEach((v) => {
             const userInstance = cc.instantiate(this.userPrefab);
-            userInstance.getComponent('RankingUser').fillData(v.rank, v.avatar, v.name, v.score);
+            const userInfo = JSON.parse(v.user_info);
+            userInstance.getComponent('RankingUser').fillData(v.rank + 1, userInfo.avatarUrl, userInfo.userName, v.score);
             this.node.addChild(userInstance);
         });
     }
